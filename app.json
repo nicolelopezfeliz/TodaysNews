@@ -17,7 +17,9 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ithogskolan.todaysnews",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
@@ -26,7 +28,19 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "config": {
+        "firebase": {
+          "apiKey": "AIzaSyCWdhOPuy9cMSAQHmakV69xCjY-95kIyxk",
+          "authDomain": "todaysnews-24efa.firebaseapp.com",
+          "databaseURL": "https://todaysnews-24efa-default-rtdb.europe-west1.firebasedatabase.app",
+          "projectId": "todaysnews-24efa",
+          "storageBucket": "todaysnews-24efa.appspot.com",
+          "messagingSenderId": "290182260059",
+          "appId": "1:290182260059:web:426c9a47d744de88a4e67e",
+          "measurementId": "G-KSXB786C73"
+        }
+      }
     }
   }
 }

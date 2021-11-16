@@ -6,6 +6,8 @@ import AppLoading from 'expo-app-loading';
 import {Provider} from 'react-redux';
 import AppNavigator from './src/navigation/AppNavigator';
 import store from './src/redux/store';
+import { useEffect } from 'react';
+import { fbInit } from './src/services/firebaseService';
 
 const loadFonts = () => {
   //let barlowL = require('./fonts/Barlow-Light.ttf');
@@ -20,6 +22,9 @@ const loadFonts = () => {
 export default function App() {
 
   const [fontLoaded, setFontLoaded] = useState(false);
+  useEffect(() =>  {
+    fbInit();
+  }, [])
 
   if (!fontLoaded) {
     return (

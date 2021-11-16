@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
+import * as Analytics from 'expo-firebase-analytics';
 
 import * as newsAction from '../redux/actions/newsAction';
+import {getData, setAmountOfClicks, setAmountOfClicksFireStore, subscribeUserFS} from "../services/firebaseService"
 
 
 const Card = props => {
@@ -15,11 +17,38 @@ const Card = props => {
     //some will return true or false depending if item exists in favorites
     const isFav = useSelector(state => state.news.favorites.some(article => article.url === props.url));
 
+    //firebase/ Firebase analytics 
+    useEffect(() => {
+        Analytics.setCurrentScreen("Card");
+        const unsubscribe = getData("anna", (clicks) => setLocalAmountOfClicks(clicks));
+
+        //FS
+        subscribeUserFS("Maria", (clicks) => setLocalClicksFS(clicks))
+        //setAmountOfClicksFireStore("Maria", (clicks) => setLocalClicksFS(clicks))
+
+        //return method is triggered when screen isisnt needed anymore 
+        //when screen isint needed anymore 
+        //here we unsubscribe
+        return () => {
+            unsubscribe();
+        };
+    }, [])
+
+    const [localAmountOfClicks, setLocalAmountOfClicks] = React.useState(0);
+    const [localClicksFS, setLocalClicksFS] = React.useState(0);
+
     return (
         <TouchableOpacity onPress={() => {
             props.navigation.navigate('NewsDetails', {
                 articleUrl: props.url
             })
+            Analytics.logEvent("pressing card");
+            setAmountOfClicks("anna", localAmountOfClicks + 1)
+            setLocalAmountOfClicks(localAmountOfClicks + 1)
+
+            //Fire store
+            setAmountOfClicksFireStore('Maria', localClicksFS + 1)
+            setLocalClicksFS(localClicksFS + 1)
             }}>
             <View style={styles.card}>
 
