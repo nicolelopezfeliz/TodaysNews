@@ -1,6 +1,7 @@
 import {FirebaseApp, initializeApp} from 'firebase/app';
-import {getDatabase, set, ref, onValue, DataSnapshot, Unsubscribe as UnsubscribeRTD} from 'firebase/database'
+import {getDatabase, set, ref, onValue, DataSnapshot, Unsubscribe as UnsubscribeRTD, update} from 'firebase/database'
 import { setDoc, doc, getFirestore, Unsubscribe as UnsubscribeFS, onSnapshot} from 'firebase/firestore';
+import { getAuth, createUserWithEmailAndPassword, updateCurrentUser, User, signInWithEmailAndPassword, UserCredential} from 'firebase/auth';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCWdhOPuy9cMSAQHmakV69xCjY-95kIyxk",
@@ -60,3 +61,32 @@ const firebaseConfig = {
       callback(data.amountOfClicks)
     });
   }
+
+  export const registerUserFirebase = async (firstName: string, lastname: string, email: string, password: string): Promise<UserCredential> => {
+    const auth = getAuth();
+    const createUserResponse = await createUserWithEmailAndPassword(auth, email, password);
+    const newUser: User = {
+      ...createUserResponse.user, 
+      displayName: firstName + ' ' + lastname
+    };
+
+    newUser.email;
+
+    await updateCurrentUser(auth, newUser);
+    return createUserResponse;
+  };
+
+  export const logInToFirebase = async (email: string, password: string): Promise<UserCredential | undefined> => {
+    const auth = getAuth();
+
+    try {
+
+      const credentialUser = await signInWithEmailAndPassword(auth, email, password);
+      return credentialUser;
+
+    } catch (error) {
+      
+      return undefined;
+
+    }
+  };

@@ -9,10 +9,50 @@ import NewsListScreen from '../screens/NewsListScreen';
 import NewsDetailScreen from '../screens/NewsDetailScreen';
 import FavoriteScreen from '../screens/FavoriteScreen';
 import AboutScreen from '../screens/AboutScreen';
+import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
+import { AuthContext, AuthContextProvider } from '../contexts/AuthContext';
+import { useContext } from 'react';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
+
+function AppNavigator() {
+    const authContext = useContext(AuthContext);
+    return(
+        <AuthContextProvider>
+        <NavigationContainer>
+        <Stack.Navigator>
+
+            {!authContext?.isUserSignedIn && (
+                <>
+                    <Stack.Screen
+                        name="LoginScreen"
+                        component={LoginScreen}
+                        options={{ title: 'Login Screenoo' }}
+                    />
+                    <Stack.Screen
+                        name="RegisterScreen"
+                        component={RegisterScreen}
+                        options={{ title: 'Register screenooo' }}
+                    />
+                </>
+            )}
+
+            {authContext?.isUserSignedIn && (
+                <Stack.Screen
+                name="RegisterScreen"
+                component={RegisterScreen}
+                options={{ title: 'Register screenooo' }}
+            />
+            )}
+
+        </Stack.Navigator>
+        </NavigationContainer>
+        </AuthContextProvider>
+    )
+}
 
 function HomeNavigator() {
     return (
@@ -68,7 +108,7 @@ function TabsNavigator() {
     );
 }
 
-function AppNavigator() {
+/*function AppNavigator() {
     return (
         <NavigationContainer>
             <Drawer.Navigator>
@@ -77,6 +117,6 @@ function AppNavigator() {
             </Drawer.Navigator>
         </NavigationContainer>
     );
-}
+}*/
 
 export default AppNavigator;
