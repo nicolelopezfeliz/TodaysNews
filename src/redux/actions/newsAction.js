@@ -25,3 +25,9 @@ export const toggleFavorites = url => {
         payload: url
     }
 }
+
+export const loginState = () => {
+    return {
+        
+    }
+}

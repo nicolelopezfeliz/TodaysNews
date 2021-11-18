@@ -13,6 +13,7 @@ const LoginScreen: React.FC<NativeStackScreenProps<StackScreens, "LoginScreen">>
     const [disabled, setDisabled] = useState(false);
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [loginState, setLoginState] = useState(false)
 
     const authContext = useContext(AuthContext)
 
@@ -20,13 +21,23 @@ const LoginScreen: React.FC<NativeStackScreenProps<StackScreens, "LoginScreen">>
         setDisabled(username.length === 0 || password.length === 0);
     }, [username, password])
 
+    useEffect(() => {
+        if (loginState) {
+            {props.navigation.navigate('HomeScreens')}
+        } else {
+            alert("Wrong username/password")
+        }
+    },[loginState])
+
     return (
         <View style={styles.container}>
             <TextInput 
+                variant="outlined"
                 label="e-mail" 
                 onChangeText={setUsername}
                 style={[styles.width80, styles.margin10]}/>
             <TextInput 
+                variant="outlined"
                 secureTextEntry
                 label="Password" 
                 onChangeText={setPassword}
@@ -37,7 +48,9 @@ const LoginScreen: React.FC<NativeStackScreenProps<StackScreens, "LoginScreen">>
                 disabled={disabled}
                 style={[styles.width80, styles.margin10]} 
                 onPress={() => {
-                    authContext?.login(username, password)
+                    authContext?.login( username, password, setLoginState)
+
+                    
                 }}/>
             <Button 
                 title="Register" 

@@ -37,9 +37,9 @@ const RegisterScreen: React.FC<NativeStackScreenProps<StackScreens, "RegisterScr
 
     return (
         <View style={styles.container}>
-            <TextInput label="First name" style={[styles.width80, styles.margin10]} onChangeText={setFirstName}/>
-            <TextInput label="Last Name" style={[styles.width80, styles.margin10]} onChangeText={setLastName}/>
-            <TextInput label="e-mail" style={[styles.width80, styles.margin10]} onChangeText={setUsername}/>
+            <TextInput variant="outlined" label="First name" style={[styles.width80, styles.margin10]} onChangeText={setFirstName}/>
+            <TextInput variant="outlined" label="Last Name" style={[styles.width80, styles.margin10]} onChangeText={setLastName}/>
+            <TextInput  variant="outlined"label="e-mail" style={[styles.width80, styles.margin10]} onChangeText={setUsername}/>
 
             <TextInput 
                 secureTextEntry

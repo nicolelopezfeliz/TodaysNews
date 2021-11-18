@@ -37,16 +37,21 @@ function AppNavigator() {
                         component={RegisterScreen}
                         options={{ title: 'Register screenooo' }}
                     />
+                    <Stack.Screen
+                        name="HomeScreens"
+                        component={HomeScreens}
+                        options={{headerShown: false}}
+                    />
                 </>
             )}
 
-            {authContext?.isUserSignedIn && (
+            {/*authContext?.isUserSignedIn && (
                 <Stack.Screen
-                name="RegisterScreen"
-                component={RegisterScreen}
-                options={{ title: 'Register screenooo' }}
+                name="HomeScreens"
+                component={HomeScreens}
+                options={{ title: 'homeeeesss' }}
             />
-            )}
+            )*/}
 
         </Stack.Navigator>
         </NavigationContainer>
@@ -108,15 +113,15 @@ function TabsNavigator() {
     );
 }
 
-/*function AppNavigator() {
+function HomeScreens() {
     return (
-        <NavigationContainer>
+
             <Drawer.Navigator>
                 <Drawer.Screen name="News" component={TabsNavigator} />
                 <Drawer.Screen name="About" component={AboutScreen} />
             </Drawer.Navigator>
-        </NavigationContainer>
+
     );
-}*/
+}
 
 export default AppNavigator;

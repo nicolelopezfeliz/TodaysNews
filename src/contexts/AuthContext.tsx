@@ -1,12 +1,14 @@
+import { setLogLevel } from 'firebase/firestore';
 import React from 'react';
 import { useState } from 'react';
+import { State } from 'react-native-gesture-handler';
 import { logInToFirebase, registerUserFirebase } from '../services/firebaseService';
 
 
 interface IAuthContext {
     isUserSignedIn: boolean;
     register: (firstName: string, lastname: string, username: string, password: string) => void;
-    login: (username: string, password: string) => void;
+    login: (username: string, password: string, loginState: any) => void;
     logOut: () => void
 }
 
@@ -16,15 +18,17 @@ export const AuthContextProvider: React.FC = (props) => {
 
     const [isUserSignedIn, setIsUserSignedIn] = useState(false);
 
-    const login = async (userName: string, password: string) => {
+    const login = async (userName: string, password: string, loginState: any) => {
         const userCidentials = await logInToFirebase(userName, password)
 
         if (userCidentials) {
             if(userCidentials.user) {
                 setIsUserSignedIn(true);
+                loginState(true)
             }
         } else {
             alert("Wrong username/password")
+            loginState(false)
         }
     }
 
